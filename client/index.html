@@ -79,8 +79,10 @@
 							<div className="col-md-4">
 								<img className="thumbnail" style={{width: "100%"}} src={this.props.userData.avatar_url} />
 							</div>
-							
+
 							<div className="col-md-8">
+								<h3>{this.props.userData.name}</h3>
+								<a className="btn btn-primary" target="_blank" href={this.props.userData.html_url}>Visit Github Page</a>
 							</div>
 						</div>
 					</div>
