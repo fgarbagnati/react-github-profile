@@ -7,16 +7,94 @@
 	<script src="https://fb.me/react-0.14.0.js"></script>
 	<script src="https://fb.me/react-dom-0.14.0.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.25/browser.min.js"></script>
+	<script type="text/javascript" src="config.js"></script>
 </head>
 <body>
 	<div class="container">
 		<div class="row">
 			<div class="col-md-6 col-md-offset-3">
+				<div id="github-profiles">
+				</div>
 			</div>
 		</div>
 	</div>
 
+
 	<script type="text/babel">
+		var Profile = React.createClass({
+			getDefaultProps: function() {
+				return {
+					clientId: config.MY_KEY,
+					clientSecret:config.SECRET_KEY,
+					urls: {
+						user: 'https://api.github.com/users'
+					},
+					perPage: 5
+				}
+			},
+			getInitialState: function() {
+				return {
+					username: 'fgarbagnati',
+					userData: [],
+					repoData: []
+				}
+			},
+			loadUserData: function() {
+				$.ajax({
+					url: this.props.urls.user + '/' + this.state.username + '?client_id=' + this.props.clientId + '&client_secret=' + this.props.clientSecret,
+					dataType: 'json',
+					cache: false,
+					success: function(data) {
+						console.log(data);
+						this.setState({userData: data});
+					}.bind(this),
+					error: function(xhr, status, err) {
+						this.setState({username: null});
+						alert(err);
+					}.bind(this)
+				})
+			},
+			loadRepoData: function() {
+
+			},
+			componentDidMount: function() {
+				this.loadUserData();
+				this.loadRepoData();
+			},
+			render: function() {
+				return(
+					<div>
+						<UserInfo />
+						<Repos />
+					</div>
+				)
+			}
+		});
+
+		var UserInfo = React.createClass({
+			render: function() {
+				return(
+					<div>
+						USERINFO
+					</div>
+				)
+			}
+		});
+
+		var Repos = React.createClass({
+			render: function() {
+				return(
+					<div>
+						REPOS
+					</div>
+				)
+			}
+		});
+
+		ReactDOM.render(
+			<Profile />,
+			document.getElementById('github-profiles')
+		);
 
 	</script>
 </body>
