@@ -41,7 +41,7 @@
 			},
 			getInitialState: function() {
 				return {
-					username: 'fgarbagnati',
+					username: null,
 					userData: [],
 					repoData: []
 				}
@@ -82,8 +82,9 @@
 				return(
 					<div>
 						<SearchForm onFormSubmit={this.handleFormSubmit}/>
-						<UserInfo userData={this.state.userData}/>
-						<Repos repoData={this.state.repoData}/>
+						{this.state.username ? <UserInfo userData={this.state.userData}/> : null}
+						{this.state.username ? <Repos repoData={this.state.repoData}/> : null}
+						
 					</div>
 				)
 			}
