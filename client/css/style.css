@@ -8,7 +8,7 @@ body { margin-top: 30px; }
 	background: #f9f9f9;
 	border: #f4f4f4 1px solid;
 	padding: 10px 10px;
-	border-radius: 10px;
+	border-radius: 5px;
 	margin-bottom: 10px;
 }
 
@@ -22,4 +22,5 @@ form {
 	margin-bottom: 35px;
 	background: #f4f4f4;
 	padding: 20px 10px;
+	border-radius: 5px;
 }
