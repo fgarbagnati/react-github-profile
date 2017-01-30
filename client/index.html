@@ -75,6 +75,7 @@
 			render: function() {
 				return(
 					<div>
+						<SearchForm />
 						<UserInfo userData={this.state.userData}/>
 						<Repos repoData={this.state.repoData}/>
 					</div>
@@ -141,6 +142,19 @@
 						<h4 className="page-header"><a target="_blank" href={this.props.url}>{this.props.name}</a></h4>
 						<p>{this.props.description}</p>
 					</div>
+				)
+			}
+		});
+
+		var SearchForm = React.createClass({
+			render: function() {
+				return(
+					<form onSubmit={this.submitForm} className="form-inline">
+						<div className="form-group">
+							<input type="text" ref="username" className="form-control searchInput" placeholder="Enter Github Username" />
+						</div>
+						<button type="submit" className="btn btn-primary">Submit</button>
+					</form>
 				)
 			}
 		});
