@@ -13,7 +13,7 @@
 <body>
 	<div class="container">
 		<div class="row">
-			<div class="col-md-6 col-md-offset-3">
+			<div class="col-md-8 col-md-offset-2">
 				<div id="github-profiles">
 				</div>
 			</div>
@@ -23,6 +23,12 @@
 
 	<script type="text/babel">
 		var Profile = React.createClass({
+			handleFormSubmit: function(username) {
+				this.setState({username: username}, function() {
+					this.loadUserData();
+					this.loadRepoData();
+				})
+			},
 			getDefaultProps: function() {
 				return {
 					clientId: config.MY_KEY,
@@ -35,7 +41,7 @@
 			},
 			getInitialState: function() {
 				return {
-					username: 'fgarbagnati',
+					username: null,
 					userData: [],
 					repoData: []
 				}
@@ -75,8 +81,10 @@
 			render: function() {
 				return(
 					<div>
-						<UserInfo userData={this.state.userData}/>
-						<Repos repoData={this.state.repoData}/>
+						<SearchForm onFormSubmit={this.handleFormSubmit}/>
+						{this.state.username ? <UserInfo userData={this.state.userData}/> : null}
+						{this.state.username ? <Repos repoData={this.state.repoData}/> : null}
+						
 					</div>
 				)
 			}
@@ -141,6 +149,29 @@
 						<h4 className="page-header"><a target="_blank" href={this.props.url}>{this.props.name}</a></h4>
 						<p>{this.props.description}</p>
 					</div>
+				)
+			}
+		});
+
+		var SearchForm = React.createClass({
+			submitForm: function(e) {
+				e.preventDefault();
+				var username = this.refs.username.value.trim();
+				if(!username) {
+					alert('Please Enter User');
+					return;
+				}
+				this.props.onFormSubmit(username);
+				this.refs.username.value = '';
+			},
+			render: function() {
+				return(
+					<form onSubmit={this.submitForm} className="form-inline">
+						<div className="form-group">
+							<input type="text" ref="username" className="form-control searchInput" placeholder="Enter Github Username" />
+						</div>
+						<button type="submit" className="btn btn-primary">Submit</button>
+					</form>
 				)
 			}
 		});
